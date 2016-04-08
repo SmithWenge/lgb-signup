@@ -1,9 +1,8 @@
 package com.lgb.function.admin.student.service;
 
 import com.google.common.base.Optional;
-import com.lgb.function.admin.student.StudentUser;
+import com.lgb.function.admin.login.StudentUser;
 import com.lgb.function.admin.student.repository.StudentRepositoryI;
-import com.lgb.function.admin.teacher.Teacher;
 import com.lgb.function.admin.user.repository.UserRepositoryI;
 import com.lgb.function.support.log.LogContent;
 import com.lgb.function.support.log.repository.LogRepositoryI;

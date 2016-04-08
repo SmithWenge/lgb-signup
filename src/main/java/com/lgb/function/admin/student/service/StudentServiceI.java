@@ -1,8 +1,6 @@
 package com.lgb.function.admin.student.service;
 
-import com.lgb.function.admin.login.AdminUser;
-import com.lgb.function.admin.student.StudentUser;
-import com.lgb.function.admin.teacher.Teacher;
+import com.lgb.function.admin.login.StudentUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

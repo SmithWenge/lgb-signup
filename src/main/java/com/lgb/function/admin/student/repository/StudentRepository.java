@@ -1,9 +1,7 @@
 package com.lgb.function.admin.student.repository;
 
 import com.google.common.base.Optional;
-import com.lgb.function.admin.student.StudentUser;
-import com.lgb.function.admin.teacher.Teacher;
-import com.lgb.function.support.dictionary.impl.DefaultDictionaryManager;
+import com.lgb.function.admin.login.StudentUser;
 import com.lgb.function.support.utils.RepositoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
