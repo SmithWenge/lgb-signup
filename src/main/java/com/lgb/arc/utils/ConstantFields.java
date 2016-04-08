@@ -1,11 +1,13 @@
 package com.lgb.arc.utils;
 
 public class ConstantFields {
+
     /* 管理员登陆的KEY */
-    public static final String SESSION_ADMIN_KEY = "adminLogin";
+    public static final String SESSION_STU_KEY = "stuLogin";
+    public static final String SESSION_ADMIN_KEY = "stuLogin";
 
     /* 分页中每页数据数 */
-    public static final int DEFAULT_PAGE_SIZE = 2;
+    public static final int DEFAULT_PAGE_SIZE = 10;
     /* ajax分页中数据的KEY */
     public static final String PAGE_KEY = "page";
     /* 日志查询时存储LogContent条件的Session Key */
@@ -60,4 +62,7 @@ public class ConstantFields {
     public static final String TURN_CARD_FAILURE_KEY = "turnCardFailureMessage";
     /* 换卡失败消息 */
     public static final String TURN_CARD_FAILURE_MESSAGE = "换卡失败";
+    /* 课程信息key */
+    public static final String COURSE_INFO_KEY = "course";
+
 }

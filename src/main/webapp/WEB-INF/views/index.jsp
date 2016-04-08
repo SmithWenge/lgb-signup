@@ -4,33 +4,26 @@
 
 
 <style type="text/css">
-    #adminLoginForm {
+    #stuLoginForm {
         margin-top: 2%;
     }
 </style>
 
-<form class="form-horizontal col-sm-offset-3" action="${contextPath}/admin/login.action" method="post" id="adminLoginForm">
+<form class="form-horizontal col-sm-offset-3" action="${contextPath}/stu/login.action" method="post" id="stuLoginForm">
     <div class="form-group">
-        <label for="inputAdminLoginName" class="col-sm-2 control-label">管理员用户</label>
+        <label for="inputStuLoginName" class="col-sm-2 control-label">学员卡号</label>
         <div class="col-sm-5">
-            <input type="text" class="form-control" id="inputAdminLoginName" name="adminLoginName" placeholder="admin">
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="inputAdminLoginPass" class="col-sm-2 control-label">管理员密码</label>
-        <div class="col-sm-5">
-            <input type="password" class="form-control" id="inputAdminLoginPass" name="adminLoginPass" placeholder="密码">
+            <input type="text" class="form-control" id="inputStuLoginName" name="stuCardNum" placeholder="111111">
         </div>
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-5">
             <button type="submit" class="btn btn-primary">登陆</button>
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#resetPass">忘记密码?</button>
         </div>
     </div>
 </form>
 
-<!-- 重置密码Form -->
+<!-- 重置密码Form
 <div class="modal fade" id="resetPass" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -66,6 +59,7 @@
         </div>
     </div>
 </div>
+-->
 
 <%@include file="/WEB-INF/include/javascript.jsp"%>
 

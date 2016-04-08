@@ -58,7 +58,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String add(Department department, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (departmentService.add(department, logUser)) {
@@ -90,7 +90,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editDepartment(Department department, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (departmentService.edit(department, logUser)) {
@@ -108,7 +108,7 @@ public class DepartmentController {
 
     @RequestMapping(value = "/delete/{departmentId}", method = RequestMethod.GET)
     public String deleteDepartment(@PathVariable("departmentId") int departmentId, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (departmentService.delete(departmentId, logUser)) {

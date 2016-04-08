@@ -36,7 +36,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
         }
 
         HttpSession session = httpServletRequest.getSession();
-        AdminUser adminUser = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser adminUser = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         Optional<AdminUser> optional = Optional.fromNullable(adminUser);
 
         if (!optional.isPresent()) {

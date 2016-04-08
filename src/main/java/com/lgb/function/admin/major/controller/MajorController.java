@@ -51,7 +51,7 @@ public class MajorController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public String majorAdd(Major major, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (majorService.add(major, logUser)) {
@@ -91,7 +91,7 @@ public class MajorController {
 
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public String editMajor(Major major, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (majorService.edit(major, logUser)) {
@@ -109,7 +109,7 @@ public class MajorController {
 
     @RequestMapping(value = "/delete/{majorId}", method = RequestMethod.GET)
     public String deleteMajor(@PathVariable("majorId") int majorId, HttpSession session, RedirectAttributes redirectAttributes) {
-        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_ADMIN_KEY);
+        AdminUser user = (AdminUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
         String logUser = user.getAdminLoginName();
 
         if (majorService.delete(majorId, logUser)) {
