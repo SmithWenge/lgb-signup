@@ -12,17 +12,34 @@
     <div class="panel-heading">
         <ul class="nav nav-pills">
             <li role="presentation" ><a>报名系统</a></li>
+            <li role="presentation"class="active" style="float: right"><a href="${contextPath}/stu/querySign.action">查看已报名课程</a></li>
         </ul>
     </div>
 
     <div class="panel-body">
-
+        <c:if test="${not empty addMessage}">
+            <div class="col-md-12" id="addMessage">
+                <p class="bg-success">${addMessage}</p>
+            </div>
+        </c:if>
+        <c:if test="${not empty deleteMessage}">
+            <div class="col-md-12" id="deleteMessage">
+                <p class="bg-success">${deleteMessage}</p>
+            </div>
+        </c:if>
+        <c:if test="${not empty deleteFailureMessage}">
+            <div class="col-md-12" id="deleteFailureMessage">
+                <p class="bg-danger">${deleteFailureMessage}</p>
+            </div>
+        </c:if>
         <div class="row" style="margin-top: 5px;">
             <div class="col-md-12">
                 <table class="table" id="paginationTable">
                     <tr style="background-color: #2aabd2;">
                         <th>课程号</th>
                         <th>课程名</th>
+                        <th>所属专业</th>
+                        <th>所属系别</th>
                         <th>限制人数</th>
                         <th>操作</th>
                     </tr>
@@ -30,6 +47,8 @@
                         <tr>
                             <td>${course.courseNum}</td>
                             <td>${course.courseName}</td>
+                            <td>${course.majorName}</td>
+                            <td>${course.departmentName}</td>
                             <td>${course.courseLimitNum}</td>
                             <td>
                                 <a href="${contextPath}/stu/courseInfo/${course.courseId}.action" style="text-decoration: none;">
@@ -48,7 +67,7 @@
                     <ul class="pager">
                         <c:if test="${page.number > 0 }">
                             <li class="previous">
-                                <a href="${contextPath}/admin/student/page.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
+                                <a href="${contextPath}/stu/login.action?page=${page.number - 1}"><span aria-hidden="true">&larr;</span> 上一页</a>
                             </li>
                         </c:if>
                         <c:if test="${page.number <= 0 }">
@@ -58,7 +77,7 @@
                         </c:if>
                         <c:if test="${page.number + 1 < page.totalPages }">
                             <li class="next">
-                                <a href="${contextPath}/admin/student/page.action?page=${page.number + 1}">下一页 <span aria-hidden="true">&rarr;</span></a>
+                                <a href="${contextPath}/stu/login.action?page=${page.number + 1}">下一页 <span aria-hidden="true">&rarr;</span></a>
                             </li>
                         </c:if>
                         <c:if test="${page.number + 1 >= page.totalPages }">

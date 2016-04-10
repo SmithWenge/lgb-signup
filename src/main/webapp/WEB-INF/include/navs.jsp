@@ -6,7 +6,7 @@
     <div class="col-md-12">
         <ul class="nav nav-pills">
             <li class="dropdown" style="float: right;">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${adminLogin.adminLoginName} <span class="caret"></span></a>
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${stuLogin.stuName} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><a href="${contextPath}/stu/logout.action">退出登陆</a></li>
                 </ul>

@@ -29,7 +29,10 @@ public class StudentLoginService implements StudentLoginServiceI {
     public Page<Course> list(Course course,Pageable pageable) {
         return studentLoginRepository.query4Page(course,pageable);
     }
-
+    @Override
+    public Page<Course> querySign4Page(Course course,Pageable pageable) {
+        return studentLoginRepository.querySign4Page(course, pageable);
+    }
     @Override
     public Course moreCourseInfo(int courseId) {
         return studentLoginRepository.queryForCourse(courseId);
@@ -38,9 +41,21 @@ public class StudentLoginService implements StudentLoginServiceI {
     @Override
     public boolean add(StudentCourse studentCourse) {
 
-        boolean tmp = studentLoginRepository.signUp(studentCourse);
+        if (studentLoginRepository.signUpVer(studentCourse) != null){
+            return false;
 
-        return tmp;
+        }else {
+            boolean tmp = studentLoginRepository.signUp(studentCourse);
+
+            return tmp;
+        }
     }
-
+    @Override
+    public boolean delete(StudentCourse studentCourse) {
+        if (studentLoginRepository.signUpVer(studentCourse) != null){
+            boolean tmp = studentLoginRepository.delete(studentCourse);
+            return tmp;
+        }
+        return false;
+    }
 }

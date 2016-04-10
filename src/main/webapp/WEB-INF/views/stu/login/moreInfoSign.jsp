@@ -12,16 +12,12 @@
   <div class="panel-heading">
     <ul class="nav nav-pills">
       <li role="presentation" ><a>课程详细信息</a></li>
-      <li role="presentation"class="active" style="float: right"><a href="${contextPath}/stu/login.action">返回上一页</a></li>
+      <li role="presentation"class="active" style="float: right"><a href="${contextPath}/stu/querySign.action">返回上一页</a></li>
+      <li role="presentation"class="active" style="float: right"><a href="${contextPath}/stu/login.action">返回首页</a></li>
     </ul>
   </div>
 
   <div class="panel-body">
-    <c:if test="${not empty addFailureMessage}">
-      <div class="col-md-12" id="message">
-        <p class="bg-danger">${addFailureMessage}</p>
-      </div>
-    </c:if>
 
     <div class="row" style="margin-top: 5px;">
       <div class="col-md-12">
@@ -56,8 +52,8 @@
             <td>${course.courseTuition}</td>
 
             <td>
-              <a href="${contextPath}/stu/signUp/${course.courseId}.action" style="text-decoration: none;">
-                <button type="button" class="btn btn-success">报名</button>
+              <a href="${contextPath}/stu/delete/${course.courseId}.action" style="text-decoration: none;">
+                <button type="button" class="btn btn-danger">退订</button>
               </a>
             </td>
           </tr>

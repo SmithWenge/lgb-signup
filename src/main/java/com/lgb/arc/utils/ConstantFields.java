@@ -5,16 +5,17 @@ public class ConstantFields {
     /* 管理员登陆的KEY */
     public static final String SESSION_STU_KEY = "stuLogin";
     public static final String SESSION_ADMIN_KEY = "stuLogin";
+    /* 学员报名登陆的KEY */
+
 
     /* 分页中每页数据数 */
-    public static final int DEFAULT_PAGE_SIZE = 10;
+    public static final int DEFAULT_PAGE_SIZE = 2;
     /* ajax分页中数据的KEY */
     public static final String PAGE_KEY = "page";
     /* 日志查询时存储LogContent条件的Session Key */
     public static final String SESSION_LOG_SEARCH_KEY = "logSearch";
-    /* 学员查询时存储StudentUser条件的Session Key */
-    public static final String SESSION_STU_SEARCH_KEY = "stuSearch";
 
+    public static final String SESSION_STU_ID_KEY = "stuId";
     /**
      * 默认邮件配置项
      */

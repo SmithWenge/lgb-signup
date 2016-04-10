@@ -2,6 +2,8 @@ package com.lgb.function.admin.course;
 
 import com.lgb.arc.Entry;
 
+import java.util.List;
+
 /**
  * Created by Samuel on 16/4/8.
  */
@@ -24,6 +26,69 @@ public class Course extends Entry {
     private int deleteFlag;
     private String departmentName;
     private String majorName;
+    private int timeWeek;
+    private String timeSpecific;
+    private int courseRoom;
+    private int studentId;
+    private String teacherOneName;
+    private String teacherTwoName;
+    private List<CourseTime> times;
+
+    public List<CourseTime> getTimes() {
+        return times;
+    }
+
+    public void setTimes(List<CourseTime> times) {
+        this.times = times;
+    }
+
+    public String getTeacherOneName() {
+        return teacherOneName;
+    }
+
+    public void setTeacherOneName(String teacherOneName) {
+        this.teacherOneName = teacherOneName;
+    }
+
+    public String getTeacherTwoName() {
+        return teacherTwoName;
+    }
+
+    public void setTeacherTwoName(String teacherTwoName) {
+        this.teacherTwoName = teacherTwoName;
+    }
+
+    public int getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(int studentId) {
+        this.studentId = studentId;
+    }
+
+    public int getTimeWeek() {
+        return timeWeek;
+    }
+
+    public void setTimeWeek(int timeWeek) {
+        this.timeWeek = timeWeek;
+    }
+
+    public String getTimeSpecific() {
+        return timeSpecific;
+    }
+
+    public void setTimeSpecific(String timeSpecific) {
+        this.timeSpecific = timeSpecific;
+    }
+
+    public int getCourseRoom() {
+        return courseRoom;
+    }
+
+    public void setCourseRoom(int courseRoom) {
+        this.courseRoom = courseRoom;
+    }
 
     public String getDepartmentName() {
         return departmentName;
