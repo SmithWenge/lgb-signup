@@ -1,8 +1,7 @@
-package com.lgb.function.admin.department;
+package com.lgb.function.stu.course;
 
 import com.lgb.arc.Entry;
 import org.springframework.format.annotation.DateTimeFormat;
-
 import java.util.Date;
 
 public class Department extends Entry {

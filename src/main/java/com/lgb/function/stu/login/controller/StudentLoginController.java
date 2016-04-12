@@ -1,10 +1,13 @@
-package com.lgb.function.admin.login.controller;
+package com.lgb.function.stu.login.controller;
 
+import com.google.common.base.Optional;
 import com.lgb.arc.utils.ConstantFields;
-import com.lgb.function.admin.course.Course;
-import com.lgb.function.admin.login.StudentCourse;
-import com.lgb.function.admin.login.StudentUser;
-import com.lgb.function.admin.login.service.StudentLoginServiceI;
+import com.lgb.function.stu.course.Course;
+import com.lgb.function.stu.course.Department;
+import com.lgb.function.stu.course.Major;
+import com.lgb.function.stu.login.StudentCourse;
+import com.lgb.function.stu.login.StudentUser;
+import com.lgb.function.stu.login.service.StudentLoginServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,10 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/stu")
@@ -30,8 +37,14 @@ public class StudentLoginController {
                                     Pageable pageable, StudentUser studentUser, Course course, HttpSession session) {
 
         StudentUser loginUser = studentLoginService.login(studentUser);
+        if (loginUser == null) {
+            return new ModelAndView("redirect:/stu/routeLogin.action");
+        }
         ModelAndView mav = new ModelAndView();
-
+        Optional<Course> courseOptional = Optional.fromNullable(course);
+        if (!courseOptional.isPresent()) {
+            course = new Course();
+        }
         course.setStudentId(loginUser.getStuId());
         session.setAttribute(ConstantFields.SESSION_STU_ID_KEY,loginUser.getStuId());
 
@@ -41,6 +54,8 @@ public class StudentLoginController {
             mav.addObject(ConstantFields.SESSION_STU_KEY, loginUser);
             mav.setViewName("stu/login/list");
             session.setAttribute(ConstantFields.SESSION_STU_KEY, loginUser);
+            List<Department> departments = studentLoginService.departments();
+            mav.addObject("departments", departments);
         }
         else {
             mav.setViewName("redirect:/stu/routeLogin.action");
@@ -56,6 +71,8 @@ public class StudentLoginController {
             StudentUser user = (StudentUser) session.getAttribute(ConstantFields.SESSION_STU_KEY);
             if (user != null) {
                 course.setStudentId((Integer) session.getAttribute(ConstantFields.SESSION_STU_ID_KEY));
+                List<Department> departments = studentLoginService.departments();
+                mav.addObject("departments", departments);
 
                 Page<Course> page = studentLoginService.list(course, pageable);
                 mav.addObject(ConstantFields.PAGE_KEY, page);
@@ -68,6 +85,33 @@ public class StudentLoginController {
             mav.setViewName("redirect:/stu/routeLogin.action");
         }
         return mav;
+    }
+
+    @RequestMapping("/pageSearch")
+    public ModelAndView searchPage(Course course, @PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE) Pageable pageable, HttpSession session) {
+        Optional<Course> optional = Optional.fromNullable(course);
+
+        if (optional.isPresent()) {
+            course.setStudentId((Integer)session.getAttribute(ConstantFields.SESSION_STU_ID_KEY));
+        }
+
+        ModelAndView mav = new ModelAndView("stu/login/list");
+        List<Department> departments = studentLoginService.departments();
+        mav.addObject("departments", departments);
+
+        Page<Course> courses = studentLoginService.list(course, pageable);
+        mav.addObject(ConstantFields.PAGE_KEY, courses);
+
+        return mav;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/majors/{departmentId}", method = RequestMethod.POST)
+    public Map<String, List<Major>> majors(@PathVariable("departmentId") int departmentId) {
+        Map<String, List<Major>> map = new HashMap<>();
+        map.put("majors", studentLoginService.majors(departmentId));
+
+        return map;
     }
 
     @RequestMapping(value = "/routeLogin", method = RequestMethod.GET)
@@ -161,4 +205,7 @@ public class StudentLoginController {
         return "redirect:/stu/login.action";
 
     }
+
+
+
 }

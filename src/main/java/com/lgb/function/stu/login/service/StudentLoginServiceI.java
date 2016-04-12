@@ -1,10 +1,14 @@
-package com.lgb.function.admin.login.service;
+package com.lgb.function.stu.login.service;
 
-import com.lgb.function.admin.course.Course;
-import com.lgb.function.admin.login.StudentCourse;
-import com.lgb.function.admin.login.StudentUser;
+import com.lgb.function.stu.course.Course;
+import com.lgb.function.stu.course.Department;
+import com.lgb.function.stu.course.Major;
+import com.lgb.function.stu.login.StudentCourse;
+import com.lgb.function.stu.login.StudentUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 public interface StudentLoginServiceI {
     Page<Course> list(Course course,Pageable pageable);
@@ -13,4 +17,6 @@ public interface StudentLoginServiceI {
     boolean add(StudentCourse studentCourse);
     Page<Course> querySign4Page(Course course,Pageable pageable);
     boolean delete(StudentCourse studentCourse);
+    List<Department> departments();
+    List<Major> majors(int departmentId);
 }

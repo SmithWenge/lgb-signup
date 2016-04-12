@@ -1,4 +1,4 @@
-package com.lgb.function.admin.major;
+package com.lgb.function.stu.course;
 
 import com.lgb.arc.Entry;
 
@@ -42,3 +42,4 @@ public class Major extends Entry {
         return majorName;
     }
 }
+

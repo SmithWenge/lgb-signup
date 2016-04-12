@@ -1,7 +1,6 @@
-package com.lgb.function.admin.login;
+package com.lgb.function.stu.login;
 
 import com.lgb.arc.Entry;
-import com.lgb.arc.utils.PasswordUtils;
 
 public class AdminUser extends Entry {
     private int adminId;

@@ -12,6 +12,27 @@
     <div class="panel-heading">
         <ul class="nav nav-pills">
             <li role="presentation" ><a>报名系统</a></li>
+            <li role="presentation" >
+                <form class="form-inline" action="${contextPath}/stu/pageSearch.action" method="post">
+                    <div class="form-group">
+                        <label class="sr-only" for="departmentId">系别</label>
+                        <select class="form-control" id="departmentId" name="departmentId">
+                            <option value="0">全部</option>
+                            <c:forEach items="${departments}" var="department">
+                                <option value="${department.departmentId}">${department.departmentName}</option>
+                            </c:forEach>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="sr-only" for="majorId">专业</label>
+                        <select class="form-control" id="majorId" name="majorId">
+                            <option value="0">全部</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-default">查询</button>
+                </form>
+            </li>
+
             <li role="presentation"class="active" style="float: right"><a href="${contextPath}/stu/querySign.action">查看已报名课程</a></li>
         </ul>
     </div>
@@ -93,4 +114,44 @@
 </div>
 
 <%@include file="/WEB-INF/include/javascript.jsp"%>
+<script type="text/javascript">
+    $(function() {
+        // 设置table表格中的行高
+        var $height = $('#paginationTable td').height() + 'px';
+        $('#paginationTable td').css('line-height', $height);
+
+        setTimeout(function() {
+            $("#addMessage").hide();
+        }, 2000);
+        setTimeout(function() {
+            $("#editMessage").hide();
+        }, 2000);
+        setTimeout(function() {
+            $("#deleteMessage").hide();
+        }, 2000);
+        setTimeout(function() {
+            $("#deleteFailureMessage").hide();
+        }, 2000);
+        setTimeout(function() {
+            $("#editFailureMessage").hide();
+        }, 2000);
+
+        $('#departmentId').on('change', function () {
+            var $departmentId = $('#departmentId').val();
+            var major = document.getElementById("majorId");
+            $.ajax({
+                type: 'post',
+                contentType: 'application/json',
+                dataType: 'json',
+                url: '${contextPath}/stu/majors/' + $departmentId + '.action',
+                success: function (result) {
+                    major.options.length = 0;
+                    $.each(result.majors, function (i, item) {
+                        major.options.add(new Option(item.majorName, item.majorId));
+                    });
+                }
+            });
+        });
+    });
+</script>
 <%@include file="/WEB-INF/include/footer.jsp"%>

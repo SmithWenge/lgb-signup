@@ -32,17 +32,17 @@
                 <h4 class="modal-title" id="myModalLabel">重置密码</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" action="${contextPath}/admin/resetPass.action" method="post">
+                <form class="form-horizontal" action="${contextPath}/stu/resetPass.action" method="post">
                     <div class="form-group">
                         <label for="adminLoginName" class="col-sm-3 control-label">管理员登陆名</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" id="adminLoginName" placeholder="admin" name="adminLoginName">
+                            <input type="text" class="form-control" id="adminLoginName" placeholder="stu" name="adminLoginName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="adminEmail" class="col-sm-3 control-label">管理员邮箱</label>
                         <div class="col-sm-9">
-                            <input type="email" class="form-control" id="adminEmail" placeholder="admin@example.com" name="adminEmail">
+                            <input type="email" class="form-control" id="adminEmail" placeholder="stu@example.com" name="adminEmail">
                         </div>
                     </div>
                     <div class="form-group">

@@ -1,4 +1,4 @@
-package com.lgb.function.admin.course;
+package com.lgb.function.stu.course;
 
 import com.lgb.arc.Entry;
 

@@ -1,11 +1,11 @@
-package com.lgb.function.admin.login.repository;
+package com.lgb.function.stu.login.repository;
 
-import com.google.common.base.Optional;
-import com.lgb.function.admin.course.Course;
-import com.lgb.function.admin.course.CourseTime;
-import com.lgb.function.admin.login.AdminUser;
-import com.lgb.function.admin.login.StudentCourse;
-import com.lgb.function.admin.login.StudentUser;
+import com.lgb.function.stu.course.Course;
+import com.lgb.function.stu.course.CourseTime;
+import com.lgb.function.stu.course.Department;
+import com.lgb.function.stu.course.Major;
+import com.lgb.function.stu.login.StudentCourse;
+import com.lgb.function.stu.login.StudentUser;
 import com.lgb.function.support.utils.RepositoryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -54,13 +54,28 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
                 "    AND courseId IN (SELECT courseId FROM lgb_course C WHERE C.courseId NOT IN \n" +
                 "    (SELECT courseId FROM lgb_studentCourse SC WHERE SC.studentId = ?))) AS TMP LEFT JOIN (SELECT COUNT(studentCourseId) AS NUM, C.courseId FROM lgb_course C LEFT JOIN lgb_studentCourse SC ON SC.courseId = C.courseId GROUP BY C.courseId) CUM ON CUM.courseId = TMP.courseId WHERE TMP.courseLimitNum > CUM.NUM");
 
-        Object[] args = {
-                course.getStudentId()
-        };
+        List<Object> list = new ArrayList<>();
+        if (course.getStudentId() > 0) {
+            list.add(course.getStudentId());
+        }
 
+        if (course.getDepartmentId() > 0) {
+            sql.append(" AND departmentId = ?");
+            list.add(course.getDepartmentId());
+        }
+
+        if (course.getMajorId() > 0) {
+            sql.append(" AND majorId = ?");
+            list.add(course.getMajorId());
+        }
         sql.append(" ORDER BY courseId DESC");
 
-        return courseRepositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
+        Object[] args = list.toArray();
+        try {
+            return courseRepositoryUtils.select4Page(sql.toString(), pageable, args, new Query4PageRowMapper());
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     @Override
@@ -115,7 +130,7 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
 
     @Override
     public Course queryForCourse(int courseId) {
-        String sql = "SELECT courseId, majorName, departmentName, courseTuition, courseNum, courseName, teacherOneName, teacherTwoName, courseRoom, courseLimitNum, courseStuNum FROM lgb_course C  LEFT JOIN lgb_major M ON C.majorId = M.majorId LEFT JOIN lgb_department D ON C.departmentId = d.departmentId WHERE C.deleteFlag = 0 and courseId = ?";
+        String sql = "SELECT courseId, majorName, departmentName, courseTuition, courseNum, courseName, teacherOneName, teacherTwoName, courseRoom, courseLimitNum, courseStuNum FROM lgb_course C  LEFT JOIN lgb_major M ON C.majorId = M.majorId LEFT JOIN lgb_department D ON C.departmentId = D.departmentId WHERE C.deleteFlag = 0 and courseId = ?";
         Object[] args = {
                 courseId
         };
@@ -193,6 +208,58 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
         }
 
     }
+    @Override
+    public List<Department> selectDepartments() {
+        String sql = "SELECT departmentId, departmentName FROM lgb_department WHERE deleteFlag = 0";
+        Object[] args = {};
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectDepartmentsRowMapper());
+        } catch (Exception e) {
+            return new ArrayList<Department>();
+        }
+    }
+
+    @Override
+    public List<Major> selectMajors(int departmentId) {
+        String sql = "SELECT majorId, majorName FROM lgb_major WHERE deleteFlag = 0 AND departmentId = ?";
+        Object[] args = {
+                departmentId
+        };
+
+        try {
+            return jdbcTemplate.query(sql, args, new SelectMajorsRowMapper());
+        } catch (Exception e) {
+            return new ArrayList<Major>();
+        }
+    }
+
+    private class SelectMajorsRowMapper implements RowMapper<Major> {
+
+        @Override
+        public Major mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Major major = new Major();
+
+            major.setMajorId(rs.getInt("majorId"));
+            major.setMajorName(rs.getString("majorName"));
+
+            return major;
+        }
+    }
+
+    private class SelectDepartmentsRowMapper implements RowMapper<Department> {
+
+        @Override
+        public Department mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Department department = new Department();
+
+            department.setDepartmentId(rs.getInt("departmentId"));
+            department.setDepartmentName(rs.getString("departmentName"));
+
+            return department;
+        }
+    }
+
 
 
     private class SelectUniqueRowMapper implements RowMapper<StudentUser> {

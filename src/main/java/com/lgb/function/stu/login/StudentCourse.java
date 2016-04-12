@@ -1,4 +1,4 @@
-package com.lgb.function.admin.login;
+package com.lgb.function.stu.login;
 
 import com.lgb.arc.Entry;
 

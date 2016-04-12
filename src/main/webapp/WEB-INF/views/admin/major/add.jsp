@@ -51,7 +51,7 @@
                     minlength: 2,
                     maxlength: 10,
                     remote: {
-                        url : "${contextPath}/admin/major/majorName.action",
+                        url : "${contextPath}/stu/major/majorName.action",
                         type : "post",
                         dataType : "json",
                         data : {

@@ -1,10 +1,11 @@
-package com.lgb.function.admin.login.repository;
+package com.lgb.function.stu.login.repository;
 
-import com.lgb.function.admin.course.Course;
-import com.lgb.function.admin.course.CourseTime;
-import com.lgb.function.admin.login.AdminUser;
-import com.lgb.function.admin.login.StudentCourse;
-import com.lgb.function.admin.login.StudentUser;
+import com.lgb.function.stu.course.Course;
+import com.lgb.function.stu.course.CourseTime;
+import com.lgb.function.stu.course.Department;
+import com.lgb.function.stu.course.Major;
+import com.lgb.function.stu.login.StudentCourse;
+import com.lgb.function.stu.login.StudentUser;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +20,6 @@ public interface StudentLoginRepositoryI {
     List<CourseTime> queryForCourseTime(int courseId);
     StudentCourse signUpVer(StudentCourse studentCourse);
     boolean delete(StudentCourse studentCourse);
+    List<Department> selectDepartments();
+    List<Major> selectMajors(int departmentId);
 }

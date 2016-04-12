@@ -226,7 +226,7 @@
                     minlength: 2,
                     maxlength: 50,
                     remote: {
-                        url : "${contextPath}/admin/student/cardNum.action",
+                        url : "${contextPath}/stu/student/cardNum.action",
                         type : "post",
                         dataType : "json",
                         data : {

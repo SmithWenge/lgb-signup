@@ -64,7 +64,7 @@
                     minlength: 2,
                     maxlength: 10,
                     remote: {
-                        url : "${contextPath}/admin/department/departmentName.action",
+                        url : "${contextPath}/stu/department/departmentName.action",
                         type : "post",
                         dataType : "json",
                         data : {

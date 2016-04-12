@@ -1,9 +1,8 @@
 package com.lgb.arc.interceptor;
 
 import com.google.common.base.Optional;
-import com.lgb.arc.exception.LoginException;
 import com.lgb.arc.utils.ConstantFields;
-import com.lgb.function.admin.login.AdminUser;
+import com.lgb.function.stu.login.AdminUser;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,7 +39,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
         Optional<AdminUser> optional = Optional.fromNullable(adminUser);
 
         if (!optional.isPresent()) {
-            String redirectLocation = httpServletRequest.getContextPath() + "/admin/routeLogin.action";
+            String redirectLocation = httpServletRequest.getContextPath() + "/stu/routeLogin.action";
             httpServletResponse.sendRedirect(redirectLocation);
             return false;
             /* 用exceptionMapping中确定重定向 */

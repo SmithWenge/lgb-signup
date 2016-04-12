@@ -1,16 +1,19 @@
-package com.lgb.function.admin.login.service;
+package com.lgb.function.stu.login.service;
 
 
-import com.lgb.function.admin.course.Course;
-import com.lgb.function.admin.login.StudentCourse;
-import com.lgb.function.admin.login.repository.StudentLoginRepository;
-import com.lgb.function.admin.login.StudentUser;
-import com.lgb.function.support.log.repository.LogRepositoryI;
+import com.lgb.function.stu.course.Course;
+import com.lgb.function.stu.course.Department;
+import com.lgb.function.stu.course.Major;
+import com.lgb.function.stu.login.StudentCourse;
+import com.lgb.function.stu.login.repository.StudentLoginRepository;
+import com.lgb.function.stu.login.StudentUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @Transactional
@@ -57,5 +60,14 @@ public class StudentLoginService implements StudentLoginServiceI {
             return tmp;
         }
         return false;
+    }
+
+    @Override
+    public List<Department> departments() {
+        return studentLoginRepository.selectDepartments();
+    }
+    @Override
+    public List<Major> majors(int departmentId) {
+        return studentLoginRepository.selectMajors(departmentId);
     }
 }
