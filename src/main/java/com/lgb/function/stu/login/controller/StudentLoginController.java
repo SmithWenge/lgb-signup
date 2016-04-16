@@ -32,6 +32,44 @@ public class StudentLoginController {
     @Autowired
     private StudentLoginServiceI studentLoginService;
 
+    @RequestMapping("/sign")
+    public String test() {
+        return "stu/downSign/sign";
+    }
+
+    @RequestMapping(value = "/downSign",method = RequestMethod.GET)
+    public ModelAndView sign(@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE)
+                           Pageable pageable, StudentUser studentUser, Course course, HttpSession session) {
+        StudentUser loginUser = studentLoginService.login(studentUser);
+        session.setAttribute("cardNum",loginUser.getStuCardNum());
+        if (loginUser == null) {
+            return new ModelAndView("redirect:/stu/sign.action");
+        }
+        ModelAndView mav = new ModelAndView();
+
+
+        if (loginUser != null) {
+            Optional<Course> courseOptional = Optional.fromNullable(course);
+            if (!courseOptional.isPresent()) {
+                course = new Course();
+            }
+            course.setStudentId(loginUser.getStuId());
+            session.setAttribute(ConstantFields.SESSION_STU_ID_KEY,loginUser.getStuId());
+
+            Page<Course> page = studentLoginService.list(course, pageable);
+            mav.addObject(ConstantFields.PAGE_KEY, page);
+            mav.addObject(ConstantFields.SESSION_STU_KEY, loginUser);
+            mav.setViewName("stu/downSign/sign");
+//            session.setAttribute(ConstantFields.SESSION_STU_KEY, loginUser);
+            List<Department> departments = studentLoginService.departments();
+            mav.addObject("departments", departments);
+        }
+        else {
+            mav.setViewName("redirect:/stu/sign.action");
+        }
+        return mav;
+    }
+
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ModelAndView stuLogin(@PageableDefault(value = ConstantFields.DEFAULT_PAGE_SIZE)
                                     Pageable pageable, StudentUser studentUser, Course course, HttpSession session) {
@@ -152,7 +190,7 @@ public class StudentLoginController {
     @RequestMapping(value = "/courseInfo/{courseId}", method = RequestMethod.GET)
     public ModelAndView moreCourseInfo(@PathVariable("courseId") int courseId ) {
         Course course = studentLoginService.moreCourseInfo(courseId);
-        if (course != null){
+        if (course != null ){
             ModelAndView mav = new ModelAndView("stu/login/moreInfo");
             mav.addObject(ConstantFields.COURSE_INFO_KEY, course);
             return mav;
@@ -177,10 +215,12 @@ public class StudentLoginController {
 
         studentCourse.setStudentId(studentId);
         studentCourse.setCourseId(courseId);
-        if (studentLoginService.add(studentCourse) == true) {
+        if (studentLoginService.add(studentCourse) == true && session.getAttribute(ConstantFields.SESSION_STU_KEY) != null) {
 
             redirectAttributes.addFlashAttribute(ConstantFields.ADD_SUCCESS_KEY, ConstantFields.ADD_SUCCESS_MESSAGE);
             return "redirect:/stu/login.action";
+        } else if (session.getAttribute(ConstantFields.SESSION_STU_KEY) == null){
+            return "redirect:/stu/downSign.action?stuCardNum="+session.getAttribute("cardNum");
         }
         redirectAttributes.addFlashAttribute(ConstantFields.ADD_FAILURE_KEY, ConstantFields.ADD_FAILURE_MESSAGE);
         return "redirect:/stu/routeSignUp.action";

@@ -30,29 +30,47 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
     @Override
     public Page<Course> query4Page(Course course, Pageable pageable) {
         StringBuilder sql = new StringBuilder("SELECT \n" +
-                "TMP.courseId, \n" +
-                "departmentName, \n" +
-                "majorName,\n" +
-                "courseNum,\n" +
-                "courseName, \n" +
-                "courseLimitNum\n" +
-                "FROM (SELECT \n" +
-                "courseId, \n" +
-                "lgb_department.departmentName, \n" +
-                "lgb_major.majorName,\n" +
-                "courseNum,\n" +
-                "courseName, \n" +
-                "courseLimitNum\n" +
-                " FROM \n" +
-                "\tlgb_course \n" +
-                " left join lgb_major\n" +
-                "    on lgb_course.majorId = lgb_major.majorId\n" +
-                " left join lgb_department\n" +
-                "    on lgb_course.departmentId = lgb_department.departmentId\n" +
-                " WHERE \n" +
-                "\tlgb_course.deleteFlag = 0 \n" +
-                "    AND courseId IN (SELECT courseId FROM lgb_course C WHERE C.courseId NOT IN \n" +
-                "    (SELECT courseId FROM lgb_studentCourse SC WHERE SC.studentId = ?))) AS TMP LEFT JOIN (SELECT COUNT(studentCourseId) AS NUM, C.courseId FROM lgb_course C LEFT JOIN lgb_studentCourse SC ON SC.courseId = C.courseId GROUP BY C.courseId) CUM ON CUM.courseId = TMP.courseId WHERE TMP.courseLimitNum > CUM.NUM");
+                "    courseId,\n" +
+                "    C.departmentId,\n" +
+                "    C.majorId,\n" +
+                "    M.majorName,\n" +
+                "    D.departmentName,\n" +
+                "    courseNum,\n" +
+                "    courseName,\n" +
+                "    courseLimitNum\n" +
+                "FROM\n" +
+                "    lgb_course C\n" +
+                "        LEFT JOIN\n" +
+                "    lgb_department D ON C.departmentId = D.departmentId\n" +
+                "        LEFT JOIN\n" +
+                "    lgb_major M ON C.majorId = M.majorId\n" +
+                "WHERE\n" +
+                "    C.deleteFlag = 0\n" +
+                "        AND courseId IN (SELECT \n" +
+                "            courseId\n" +
+                "        FROM\n" +
+                "            lgb_course C\n" +
+                "        WHERE\n" +
+                "            C.courseId NOT IN (SELECT \n" +
+                "                    courseId\n" +
+                "                FROM\n" +
+                "                    lgb_studentCourse SC\n" +
+                "                WHERE\n" +
+                "                    SC.studentId = ?))\n" +
+                "        AND D.departmentStartDate < NOW()\n" +
+                "        AND D.departmentStopDate > NOW()\n" +
+                "        AND C.courseId IN (SELECT \n" +
+                "            C.courseId\n" +
+                "        FROM\n" +
+                "            lgb_course C\n" +
+                "                LEFT JOIN\n" +
+                "            (SELECT \n" +
+                "                SC.courseId, COUNT(SC.studentCourseId) AS NUM\n" +
+                "            FROM\n" +
+                "                lgb_studentCourse SC\n" +
+                "            GROUP BY SC.courseId) AS TMP ON TMP.courseId = C.courseId\n" +
+                "        WHERE\n" +
+                "            C.deleteFlag = 0 AND NUM < courseLimitNum)");
 
         List<Object> list = new ArrayList<>();
         if (course.getStudentId() > 0) {
@@ -60,12 +78,12 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
         }
 
         if (course.getDepartmentId() > 0) {
-            sql.append(" AND departmentId = ?");
+            sql.append(" AND D.departmentId = ?");
             list.add(course.getDepartmentId());
         }
 
         if (course.getMajorId() > 0) {
-            sql.append(" AND majorId = ?");
+            sql.append(" AND C.majorId = ?");
             list.add(course.getMajorId());
         }
         sql.append(" ORDER BY courseId DESC");
