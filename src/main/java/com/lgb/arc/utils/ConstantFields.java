@@ -5,8 +5,8 @@ public class ConstantFields {
     /* 管理员登陆的KEY */
     public static final String SESSION_STU_KEY = "stuLogin";
     public static final String SESSION_ADMIN_KEY = "stuLogin";
-    /* 学员报名登陆的KEY */
-
+    /* 学员登陆的卡号 */
+    public static final String STU_CARD_NUM = "stuCardNum";
 
     /* 分页中每页数据数 */
     public static final int DEFAULT_PAGE_SIZE = 10;
@@ -53,6 +53,10 @@ public class ConstantFields {
     public static final String DELETE_FAILURE_KEY = "deleteFailureMessage";
     /* 删除失败消息 */
     public static final String DELETE_FAILURE_MESSAGE = "删除失败";
+    /* 学员查询失败Key */
+    public static final String DELETE_STU_FAILURE_KEY = "selectStuFailMessage";
+    /* 学员查询失败消息 */
+    public static final String DELETE_STU_FAILURE_MESSAGE = "该学员不存在";
     /* 教师查询Key */
     public static final String SESSION_TEACHER_SEARCH_KEY = "teacherSearch";
     /* 换卡成功消息key */
