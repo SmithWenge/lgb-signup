@@ -7,6 +7,10 @@ public class ConstantFields {
     public static final String SESSION_ADMIN_KEY = "stuLogin";
     /* 学员登陆的卡号 */
     public static final String STU_CARD_NUM = "stuCardNum";
+    /* 学员登陆的卡号 */
+    public static final String SESSION_STU_NAME = "stuName";
+
+
 
     /* 分页中每页数据数 */
     public static final int DEFAULT_PAGE_SIZE = 10;

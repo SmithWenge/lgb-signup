@@ -8,6 +8,15 @@ public class StudentCourse extends Entry {
     private int courseId;
     private int courseDiscount;
     private String actualTuition;
+    private String signUpUser;
+
+    public String getSignUpUser() {
+        return signUpUser;
+    }
+
+    public void setSignUpUser(String signUpUser) {
+        this.signUpUser = signUpUser;
+    }
 
     public int getStudentCourseId() {
         return studentCourseId;

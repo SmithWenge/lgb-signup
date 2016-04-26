@@ -87,6 +87,7 @@ public class StudentLoginController {
         }
         course.setStudentId(loginUser.getStuId());
         session.setAttribute(ConstantFields.SESSION_STU_ID_KEY,loginUser.getStuId());
+        session.setAttribute(ConstantFields.SESSION_STU_NAME,loginUser.getStuName());
 
         if (loginUser != null) {
             Page<Course> page = studentLoginService.list(course, pageable);
@@ -265,6 +266,7 @@ public class StudentLoginController {
 
         studentCourse.setStudentId(studentId);
         studentCourse.setCourseId(courseId);
+        studentCourse.setSignUpUser((String)session.getAttribute(ConstantFields.SESSION_STU_NAME));
         if (studentLoginService.add(studentCourse) == true && session.getAttribute(ConstantFields.SESSION_STU_KEY) != null) {
 
             redirectAttributes.addFlashAttribute(ConstantFields.ADD_SUCCESS_KEY, ConstantFields.ADD_SUCCESS_MESSAGE);

@@ -34,6 +34,7 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
         List<Object> list = new ArrayList<>();
         if (course.getStudentId() > 0) {
             list.add(course.getStudentId());
+            list.add(course.getStudentId());
         }
 
         if (course.getDepartmentId() > 0) {
@@ -146,10 +147,11 @@ public class StudentLoginRepository implements StudentLoginRepositoryI {
 
     @Override
     public boolean signUp(StudentCourse studentCourse) {
-        String sql = "INSERT INTO lgb_studentCourse (courseId, studentId) VALUES (?, ?)";
+        String sql = "INSERT INTO lgb_studentCourse (courseId, studentId, signUpUser) VALUES (?, ?, ?)";
         Object[] args = {
                 studentCourse.getCourseId(),
-                studentCourse.getStudentId()
+                studentCourse.getStudentId(),
+                studentCourse.getSignUpUser()
         };
 
         return jdbcTemplate.update(sql, args) == 1 ? true : false;
