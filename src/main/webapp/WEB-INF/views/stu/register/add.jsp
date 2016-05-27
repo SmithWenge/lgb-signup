@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@include file="/WEB-INF/include/navs.jsp"%>
+<%@include file="/WEB-INF/include/header.jsp"%>
 
 <div class="row" style="margin-left: 2%; margin-right: 2%; margin-top: 5px;">
   <c:if test="${not empty addFailureMessage}">
@@ -208,7 +208,7 @@
         </div>
         <div class="form-group">
           <div class="col-sm-4">
-            <button type="submit" class="btn btn-default" >添加学生</button>
+            <button type="submit" class="btn btn-default">成为学员</button>
           </div>
         </div>
       </form>
