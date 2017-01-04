@@ -8,7 +8,7 @@
             <li class="dropdown" style="float: right;">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">${stuLogin.stuName} <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="${contextPath}/admin/logout.action">退出登陆</a></li>
+                    <li><a href="${contextPath}/stu/logout.action">退出登陆</a></li>
                 </ul>
             </li>
         </ul>
